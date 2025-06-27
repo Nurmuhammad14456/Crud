@@ -37,7 +37,7 @@ function createCard(data) {
         <p class="color">${car.color}</p>
         <strong class="card__price">${car.price}</strong>
         <p class="card__gr">${car.guarantee}</p>
-        <button data-id="${car.id}" name="delete-btn" class="card__btn">delete</button>
+        <button data-id="${car.id}" name="delete-btn" class="card__btn">Delete</button>
       </div>
     `;
     fr.appendChild(div);
@@ -82,8 +82,11 @@ wrapperEl.addEventListener("click", (event) => {
   const deleteBtn = event.target.closest("button[name='delete-btn']");
   if (deleteBtn) {
     const id = deleteBtn.dataset.id;
-    fetch(`${API_URL}/car/${id}`, { method: "DELETE" }).then(() => {
-      fetchData("/car", createCard);
-    });
+    const isConfor = confirm("Ishonchingiz komilmi , O'chirilsinmi bu card?");
+    if (isConfor) {
+      fetch(`${API_URL}/car/${id}`, { method: "DELETE" }).then(() => {
+        fetchData("/car", createCard);
+      });
+    }
   }
 });
